@@ -1,0 +1,37 @@
+.upload-placeholder {
+  width: 100%;          /* 🔥 full ngang */
+  height: 220px;        /* giữ chiều cao cố định */
+  background-color: #bdbdbd;
+  border: 2px dashed #888;
+  display: flex;        /* flex */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+.upload-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #bdbdbd;
+}
+
+.icon-wrapper {
+  position: relative;
+  color: #777;
+}
+
+.plus-icon {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  background-color: #888;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

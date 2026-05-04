@@ -1,0 +1,13 @@
+package com.netflixclone.backend.repository;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.netflixclone.backend.entity.User;
+
+@Repository
+public interface UserRepo extends JpaRepository<User, Integer> {
+    User findByEmailAndPwd(String email, String pwd);
+    User findByEmail(String email);
+}

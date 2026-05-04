@@ -1,0 +1,8 @@
+.cart-item {
+  transition: all 0.3s ease;
+}
+
+.cart-item.removing {
+  opacity: 0;
+  transform: translateX(-20px);
+}

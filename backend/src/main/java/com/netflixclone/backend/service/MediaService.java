@@ -1,0 +1,34 @@
+package com.netflixclone.backend.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.netflixclone.backend.repository.MediaRepo;
+import com.netflixclone.backend.entity.Media;
+
+@Service
+public class MediaService {
+    private final MediaRepo mediaRepo;
+
+    public MediaService(MediaRepo mediaRepo) {
+        this.mediaRepo = mediaRepo;
+    }
+
+    public List<Media> getAllMedia() {
+        return mediaRepo.findAll();
+    }
+
+    public List<Media> getMediaById(Integer id) {
+        return mediaRepo.findByMovieId(id);
+    }
+
+    public Media saveMedia(Media media) {
+        return mediaRepo.save(media);
+    }
+
+    public void deleteMedia(Integer id) {
+        mediaRepo.deleteById(id);
+    }
+    
+}
