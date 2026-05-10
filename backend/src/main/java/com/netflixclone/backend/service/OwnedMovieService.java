@@ -30,12 +30,17 @@ public class OwnedMovieService {
         return ownedMovieRepo.findById(key).orElse(null);
     }
 
-    public void addOwnedMovie(Integer userId, Integer movieId) {
-        OwnedMovie entity = new OwnedMovie();
-        entity.setUserId(userId);
-        entity.setMovieId(movieId);
+    public void addOwnedMovie(Integer userId, List<Integer> movieIds) {
+        List<OwnedMovie> ownedMovies = movieIds.stream()
+            .map(movieId -> {
+                OwnedMovie movie = new OwnedMovie();
+                movie.setUserId(userId);
+                movie.setMovieId(movieId);
+                return movie;
+            })
+            .toList();
 
-        ownedMovieRepo.save(entity);
+        ownedMovieRepo.saveAll(ownedMovies);
     }
 
     public void deleteOwnedMovie(Integer userId, Integer movieId) {

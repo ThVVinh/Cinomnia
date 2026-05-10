@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
-import com.netflixclone.backend.dto.PurchaseRequest;
+import com.netflixclone.backend.dto.PurchaseMoviesRequest;
 import com.netflixclone.backend.entity.CustomUserPrincipal;
 import com.netflixclone.backend.entity.Transaction;
 import com.netflixclone.backend.entity.TransactionDetail;
@@ -43,7 +43,7 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<?> purchase(
-            @RequestBody PurchaseRequest request,
+            @RequestBody PurchaseMoviesRequest request,
             Authentication authentication
     ) {
         String email = ((CustomUserPrincipal) authentication.getPrincipal()).getEmail();

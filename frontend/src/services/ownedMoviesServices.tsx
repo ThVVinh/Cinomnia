@@ -5,4 +5,7 @@ export const ownedMoviesService = {
         const res = await api.get("/owned-movies");
         return res.data;
     },
+    purchaseMovies: async (movieIds: number[]): Promise<void> => {
+        await api.post("/owned-movies", { movieIds });
+    }
 }

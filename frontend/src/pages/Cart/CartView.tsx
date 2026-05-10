@@ -5,9 +5,8 @@ import { XCircle } from "react-bootstrap-icons";
 import { useState } from "react";
 import "./close-animation.css";
 import { useCart } from "../../contexts/useCart";
-import { fakePayment } from "./CartModel";
 
-export function CartView() {
+export function CartView({ paymentProcess }: { paymentProcess: (moviesId: number[]) => Promise<boolean> }) {
   const { cartItems, removeFromCart, clearCart } = useCart();
   const [removingId, setRemovingId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ export function CartView() {
     setLoading(true);
     setPaymentMessage("");
 
-    const success = await fakePayment(total);
+    const success = await paymentProcess(cartItems.map(item => item.id));
 
     setLoading(false);
 

@@ -3,6 +3,8 @@ package com.netflixclone.backend.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
+
+import com.netflixclone.backend.dto.PurchaseMoviesRequest;
 import com.netflixclone.backend.entity.CustomUserPrincipal;
 import com.netflixclone.backend.service.OwnedMovieService;
 
@@ -30,9 +32,17 @@ public class OwnedMovieController {
     }
     
     @PostMapping
-    public void addOwnedMovie(Authentication auth, @RequestBody Integer movieId) {
-        Integer userId = ((CustomUserPrincipal) auth.getPrincipal()).getId();
-        ownedMovieService.addOwnedMovie(userId, movieId);
+    public void addOwnedMovie(
+            Authentication auth,
+            @RequestBody PurchaseMoviesRequest request
+    ) {
+        Integer userId =
+            ((CustomUserPrincipal) auth.getPrincipal()).getId();
+
+        ownedMovieService.addOwnedMovie(
+            userId,
+            request.getMovieIds()
+        );
     }
     
 }

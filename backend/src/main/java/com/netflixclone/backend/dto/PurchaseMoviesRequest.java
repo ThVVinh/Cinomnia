@@ -2,7 +2,7 @@ package com.netflixclone.backend.dto;
 
 import java.util.List;
 
-public class PurchaseRequest {
+public class PurchaseMoviesRequest {
     private List<Integer> movieIds;
 
     public List<Integer> getMovieIds() {

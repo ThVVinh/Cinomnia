@@ -73,29 +73,39 @@ export function HeroBanner({
             </p>
 
             {selectedMovie && ownedMovies.includes(selectedMovie.id) ? (
-              <div className="d-flex gap-3 mt-2">
-                <Button variant="danger" onClick={handlePlayClick}>
-                  <PlayFill /> Play
-                </Button>
+              <div className="d-flex mt-2 gap-3 align-items-center">
                 <Button
-                  onClick={handleClick}
-                  variant={isInCart ? "outline-light" : "success"}
+                  variant="danger"
+                  onClick={handlePlayClick}
+                  className="d-flex align-items-center gap-2 px-4 fs-5 fw-semibold"
                 >
-                  {isInCart ? <Check /> : <Plus />}
-                  <span>{isInCart ? "Added" : "My List"}</span>
+                  <PlayFill /> Play
                 </Button>
               </div>
             ) : (
-              <div className="d-flex gap-3 mt-2">
-                <Button variant="outline-light" onClick={handlePlayClick}>
-                  {selectedMovie?.price ? `$${selectedMovie.price}` : "Rent"}
-                </Button>
+              <div className="d-flex mt-2 gap-3 align-items-center">
+                <div className="bg-secondary border border-dark rounded px-3 py-2 text-center">
+                  {/* {selectedMovie?.oldPrice && (
+                    <div
+                      className="text-light text-decoration-line-through small"
+                      style={{ opacity: 0.7 }}
+                    >
+                      ${selectedMovie.oldPrice}
+                    </div>
+                  )} */}
+
+                  <div className="fw-bold text-warning gap-2 px-4 fs-5">
+                    ${selectedMovie?.price ?? "0"}
+                  </div>
+                </div>
+
                 <Button
                   onClick={handleClick}
                   variant={isInCart ? "outline-light" : "success"}
+                  className="d-flex align-items-center gap-2 px-4 fs-5 fw-semibold"
                 >
-                  {isInCart ? <Check /> : <Plus />}
-                  <span>{isInCart ? "Added" : "My List"}</span>
+                  {isInCart ? <Check size={20} /> : <Plus size={20} />}
+                  <span>{isInCart ? "Added" : "Add to Cart"}</span>
                 </Button>
               </div>
             )}
