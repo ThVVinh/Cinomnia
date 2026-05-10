@@ -10,11 +10,17 @@ import type { Movie } from "../../configs/Models";
 import { useCart } from "../../contexts/useCart";
 import { useNavigate } from "react-router-dom";
 
-export function HeroBanner({ selectedMovie }: { selectedMovie: Movie | null }) {
+export function HeroBanner({
+  selectedMovie,
+  ownedMovies,
+}: {
+  selectedMovie: Movie | null;
+  ownedMovies: number[];
+}) {
   const { cartItems, addToCart, removeFromCart } = useCart();
   const navigate = useNavigate();
 
-  const isInCart = selectedMovie          
+  const isInCart = selectedMovie
     ? cartItems.some((m) => m.id === selectedMovie.id)
     : false;
 
@@ -32,6 +38,8 @@ export function HeroBanner({ selectedMovie }: { selectedMovie: Movie | null }) {
     if (!selectedMovie) return;
     navigate(`/movie/${selectedMovie.id}`);
   };
+
+  console.log("Owned Movies:", ownedMovies);
 
   return (
     <Swiper
@@ -64,18 +72,33 @@ export function HeroBanner({ selectedMovie }: { selectedMovie: Movie | null }) {
               <b>{selectedMovie?.averageRating || "Default Rating"}</b>
             </p>
 
-            <div className="d-flex gap-3 mt-2">
-              <Button variant="danger" onClick={handlePlayClick}>
-                <PlayFill /> Play
-              </Button>
-              <Button
-                onClick={handleClick}
-                variant={isInCart ? "outline-light" : "success"}
-              >
-                {isInCart ? <Check /> : <Plus />}
-                <span>{isInCart ? "Added" : "My List"}</span>
-              </Button>
-            </div>
+            {selectedMovie && ownedMovies.includes(selectedMovie.id) ? (
+              <div className="d-flex gap-3 mt-2">
+                <Button variant="danger" onClick={handlePlayClick}>
+                  <PlayFill /> Play
+                </Button>
+                <Button
+                  onClick={handleClick}
+                  variant={isInCart ? "outline-light" : "success"}
+                >
+                  {isInCart ? <Check /> : <Plus />}
+                  <span>{isInCart ? "Added" : "My List"}</span>
+                </Button>
+              </div>
+            ) : (
+              <div className="d-flex gap-3 mt-2">
+                <Button variant="outline-light" onClick={handlePlayClick}>
+                  {selectedMovie?.price ? `$${selectedMovie.price}` : "Rent"}
+                </Button>
+                <Button
+                  onClick={handleClick}
+                  variant={isInCart ? "outline-light" : "success"}
+                >
+                  {isInCart ? <Check /> : <Plus />}
+                  <span>{isInCart ? "Added" : "My List"}</span>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </SwiperSlide>

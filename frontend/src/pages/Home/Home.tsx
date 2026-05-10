@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { HomeView } from "./HomeView";
 import type { Movie } from "../../configs/Models";
 import { movieService } from "../../services/movieService";
+import { ownedMoviesService } from "../../services/ownedMoviesServices";
 
 export function Home() {
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
   const [topNewestMovies, setTopNewestMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [ownedMovies, setOwnedMovies] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,7 +18,9 @@ export function Home() {
           movieService.getTopRatingMovies(),
           movieService.getTopNewestMovies(),
         ]);
-
+        const owned = await ownedMoviesService.getOwnedMovies();
+        
+        setOwnedMovies(owned);
         setTopRatedMovies(rated);
         setTopNewestMovies(newest);
         setSelectedMovie(rated[0] || null);
@@ -37,6 +41,7 @@ export function Home() {
       ratedMovies={topRatedMovies}
       newestMovies={topNewestMovies}
       selectedMovie={selectedMovie}
+      ownedMovies={ownedMovies}
       onSelectedMovie={setSelectedMovie}
     />
   );

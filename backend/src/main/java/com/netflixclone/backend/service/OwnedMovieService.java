@@ -30,6 +30,14 @@ public class OwnedMovieService {
         return ownedMovieRepo.findById(key).orElse(null);
     }
 
+    public void addOwnedMovie(Integer userId, Integer movieId) {
+        OwnedMovie entity = new OwnedMovie();
+        entity.setUserId(userId);
+        entity.setMovieId(movieId);
+
+        ownedMovieRepo.save(entity);
+    }
+
     public void deleteOwnedMovie(Integer userId, Integer movieId) {
         OwnedMovieKey key = new OwnedMovieKey(userId, movieId);
         ownedMovieRepo.deleteById(key);

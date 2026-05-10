@@ -7,17 +7,19 @@ export function HomeView({
   ratedMovies,
   newestMovies,
   selectedMovie,
+  ownedMovies,
   onSelectedMovie,
 }: {
   ratedMovies: Movie[];
   newestMovies: Movie[];
   selectedMovie: Movie | null;
+  ownedMovies: number[];
   onSelectedMovie: (movie: Movie) => void;
 }) {
 
   return (
     <Container fluid className="p-0 m-0" style={{ overflow: "hidden" }}>
-      <HeroBanner selectedMovie={selectedMovie} />
+      <HeroBanner selectedMovie={selectedMovie} ownedMovies={ownedMovies} />
 
       <h5 className="text-start mt-4">Trending now</h5>
       <MovieRow movies={ratedMovies} onSelectMovie={onSelectedMovie}/>

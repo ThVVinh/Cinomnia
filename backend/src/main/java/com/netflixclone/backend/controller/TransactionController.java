@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
 import com.netflixclone.backend.dto.PurchaseRequest;
+import com.netflixclone.backend.entity.CustomUserPrincipal;
 import com.netflixclone.backend.entity.Transaction;
 import com.netflixclone.backend.entity.TransactionDetail;
 import com.netflixclone.backend.service.TransactionDetailService;
@@ -30,16 +31,12 @@ public class TransactionController {
 
     @GetMapping("/me")
     public List<Transaction> getMyTransactions(Authentication authentication) {
-        String email = authentication.getName();
-        return transactionService.getTransactionByUserEmail(email);
-    }
-
-    @GetMapping("/{userId}")
-    public List<Transaction> getTransactionsByUserId(@PathVariable Integer userId) {
+        Integer userId = ((CustomUserPrincipal) authentication.getPrincipal()).getId();
         return transactionService.getTransactionByUserId(userId);
     }
+
     
-    @GetMapping("/{transactionId}/details")
+    @GetMapping("/me/{transactionId}/details")
     public List<TransactionDetail> getTransactionDetails(@PathVariable Integer transactionId) {
         return transactionDetailService.getDetailsByTransactionId(transactionId);
     }
@@ -49,8 +46,7 @@ public class TransactionController {
             @RequestBody PurchaseRequest request,
             Authentication authentication
     ) {
-        String email = authentication.getName();
-
+        String email = ((CustomUserPrincipal) authentication.getPrincipal()).getEmail();
         transactionService.purchase(email, request.getMovieIds());
 
         return ResponseEntity.ok("Purchase success");
