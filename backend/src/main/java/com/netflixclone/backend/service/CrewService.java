@@ -19,14 +19,6 @@ public class CrewService {
         return crewRepo.findById(id).orElse(null);
     }
 
-    public Crew saveCrew(Crew crew) {
-        return crewRepo.save(crew);
-    }
-
-    public void deleteCrew(Integer id) {
-        crewRepo.deleteById(id);
-    }
-
     public List<Crew> getAllCrews() {
         return crewRepo.findAll();
     }

@@ -3,10 +3,12 @@ import { Col, Container, Row } from "react-bootstrap";
 import type { Movie } from "../../configs/Models";
 
 export default function MoviePlayerView({
+  topRatedMovies,
   movie,
   videoUrl,
   loading,
 }: {
+  topRatedMovies?: Movie[];
   movie?: Movie | null;
   videoUrl?: string | null;
   loading?: boolean;
@@ -98,14 +100,17 @@ export default function MoviePlayerView({
         <h4>More Like This</h4>
 
         <div style={{ display: "flex", gap: 10, overflowX: "auto" }}>
-          {[1, 2, 3, 4].map((i) => (
+          {topRatedMovies?.slice(0, 7).map((topMovie) => (
             <img
-              key={i}
-              src={`https://image.tmdb.org/t/p/w300/sample${i}.jpg`}
+              key={topMovie.id}
+              src={topMovie.posterUrl}
               style={{
                 width: 150,
                 borderRadius: 8,
                 cursor: "pointer",
+              }}
+              onClick={() => {
+                window.location.href = `/movie/${topMovie.id}`;
               }}
             />
           ))}

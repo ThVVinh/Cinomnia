@@ -23,12 +23,4 @@ public class ReviewService {
     public Review getReviewsById(Integer id) {
         return reviewRepo.findById(id).orElse(null);
     }   
-
-    public Review saveReview(Review review) {
-        return reviewRepo.save(review);
-    }
-    
-    public void deleteReview(Integer id) {
-        reviewRepo.deleteById(id);
-    }
 }

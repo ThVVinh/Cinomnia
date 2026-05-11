@@ -11,4 +11,5 @@ import com.netflixclone.backend.entity.MultiAttributeKey.OwnedMovieKey;
 @Repository
 public interface OwnedMovieRepo extends JpaRepository<OwnedMovie, OwnedMovieKey> {
     public List<OwnedMovie> findByUserId(Integer userId);
+    public boolean existsByUserIdAndMovieId(Integer userId, Integer movieId);
 }

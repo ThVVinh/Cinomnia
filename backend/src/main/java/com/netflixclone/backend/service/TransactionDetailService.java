@@ -24,13 +24,4 @@ public class TransactionDetailService {
         TransactionDetailKey key = new TransactionDetailKey(transactionId, movieId);
         return transactionDetailRepo.findById(key).orElse(null);
     }
-
-    public TransactionDetail saveTransactionDetail(TransactionDetail transactionDetail) {
-        return transactionDetailRepo.save(transactionDetail);
-    }
-
-    public void deleteTransactionDetail(Integer transactionId, Integer movieId) {
-        TransactionDetailKey key = new TransactionDetailKey(transactionId, movieId);
-        transactionDetailRepo.deleteById(key);
-    }
 }

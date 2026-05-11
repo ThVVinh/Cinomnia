@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.netflixclone.backend.entity.OwnedMovie;
-import com.netflixclone.backend.entity.MultiAttributeKey.OwnedMovieKey;
 import com.netflixclone.backend.repository.OwnedMovieRepo;
 
 @Service
@@ -25,11 +24,6 @@ public class OwnedMovieService {
         return ownedMovies.stream().map(OwnedMovie::getMovieId).toList();
     }
 
-    public OwnedMovie getOwnedMovieById(Integer userId, Integer movieId) {
-        OwnedMovieKey key = new OwnedMovieKey(userId, movieId);
-        return ownedMovieRepo.findById(key).orElse(null);
-    }
-
     public void addOwnedMovie(Integer userId, List<Integer> movieIds) {
         List<OwnedMovie> ownedMovies = movieIds.stream()
             .map(movieId -> {
@@ -43,8 +37,7 @@ public class OwnedMovieService {
         ownedMovieRepo.saveAll(ownedMovies);
     }
 
-    public void deleteOwnedMovie(Integer userId, Integer movieId) {
-        OwnedMovieKey key = new OwnedMovieKey(userId, movieId);
-        ownedMovieRepo.deleteById(key);
+    public boolean isMovieOwnedByUser(Integer userId, Integer movieId) {
+            return ownedMovieRepo.existsByUserIdAndMovieId(userId, movieId);
     }
 }

@@ -35,14 +35,6 @@ public class MovieService {
         return movieRepo.findByGenresId(genre);
     }
 
-    public Movie saveMovie(Movie movie) {
-        return movieRepo.save(movie);
-    }
-
-    public void deleteMovie(Integer id) {
-        movieRepo.deleteById(id);
-    }
-
     public List<Movie> getMoviesByIds(List<Integer> ids) {
         return movieRepo.findAllById(ids);
     }

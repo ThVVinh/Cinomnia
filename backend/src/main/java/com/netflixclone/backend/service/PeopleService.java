@@ -22,13 +22,4 @@ public class PeopleService {
     public People getPeopleById(Integer id) {
         return peopleRepo.findById(id).orElse(null);
     }
-
-    public People savePeople(People people) {
-        return peopleRepo.save(people);
-    }
-
-    public void deletePeople(Integer id) {
-        peopleRepo.deleteById(id);
-    }
-    
 }

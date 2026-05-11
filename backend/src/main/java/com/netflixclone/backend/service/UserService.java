@@ -26,14 +26,6 @@ public class UserService {
         return userRepo.findByEmail(email);
     }
 
-    public User saveUser(User user) {
-        return userRepo.save(user); 
-    }
-
-    public void deleteUser(Integer id) {
-        userRepo.deleteById(id);
-    }
-
     public List<User> getAllUsers() {
         return userRepo.findAll();
     }

@@ -46,14 +46,6 @@ public class TransactionService {
         return transactionRepo.findByUserId(userId);
     }
 
-    public Transaction saveTransaction(Transaction transaction) {
-        return transactionRepo.save(transaction);
-    }
-
-    public void deleteTransaction(Integer id) {
-        transactionRepo.deleteById(id);
-    }
-
     public List<Transaction> getAllTransactions() {
         return transactionRepo.findAll();
     }

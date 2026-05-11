@@ -19,14 +19,6 @@ public class CastService {
         return castRepo.findById(id).orElse(null);
     }
 
-    public Cast saveCast(Cast cast) {
-        return castRepo.save(cast);
-    }
-
-    public void deleteCast(Integer id) {
-        castRepo.deleteById(id);
-    }
-
     public List<Cast> getAllCasts() {
         return castRepo.findAll();
     }

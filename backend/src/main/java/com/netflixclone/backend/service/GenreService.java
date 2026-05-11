@@ -22,13 +22,4 @@ public class GenreService {
     public Genre getGenreById(Integer id) {
         return genreRepo.findById(id).orElse(null);
     }
-
-    public Genre saveGenre(Genre genre) {
-        return genreRepo.save(genre);
-    }
-
-    public void deleteGenre(Integer id) {
-        genreRepo.deleteById(id);
-    }
-    
 }

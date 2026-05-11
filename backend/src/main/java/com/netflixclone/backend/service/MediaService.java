@@ -15,20 +15,8 @@ public class MediaService {
         this.mediaRepo = mediaRepo;
     }
 
-    public List<Media> getAllMedia() {
-        return mediaRepo.findAll();
-    }
-
     public List<Media> getMediaById(Integer id) {
         return mediaRepo.findByMovieId(id);
-    }
-
-    public Media saveMedia(Media media) {
-        return mediaRepo.save(media);
-    }
-
-    public void deleteMedia(Integer id) {
-        mediaRepo.deleteById(id);
     }
     
 }
