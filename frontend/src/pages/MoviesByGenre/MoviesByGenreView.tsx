@@ -49,6 +49,7 @@ export function MoviesByGenreView({
   onSelectGenre,
   selectedMovie,
   onSelectMovie,
+  ownedMovies,
 }: {
   genres: Genre[];
   movies: Movie[];
@@ -56,10 +57,11 @@ export function MoviesByGenreView({
   onSelectGenre: (genre: Genre) => void;
   selectedMovie: Movie | null;
   onSelectMovie: (movie: Movie) => void;
+  ownedMovies: number[];
 }) {
   return (
     <Container fluid className="p-0 m-0" style={{ overflow: "hidden" }}>
-      <HeroBanner selectedMovie={selectedMovie} />
+      <HeroBanner ownedMovies={ownedMovies} selectedMovie={selectedMovie} />
 
       <GenreTab
         genres={genres}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MoviesByGenreView } from "./MoviesByGenreView";
 import { genreService } from "../../services/genreService";
 import type { Genre, Movie } from "../../configs/Models";
+import { ownedMoviesService } from "../../services/ownedMoviesServices";
 
 export function MoviesByGenre() {
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -9,13 +10,17 @@ export function MoviesByGenre() {
   const [activeGenre, setActiveGenre] = useState<Genre | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true);
+  const [ownedMovies, setOwnedMovies] = useState<number[]>([]);
 
   useEffect(() => {
     const loadGenres = async () => {
       try {
-        const data = await genreService.getGenres();
-        setGenres(data);
-        setActiveGenre(data[0] || null);
+        const genresData = await genreService.getGenres();
+        setGenres(genresData);
+        setActiveGenre(genresData[0] || null);
+
+        const ownedMoviesData = await ownedMoviesService.getOwnedMovies();
+        setOwnedMovies(ownedMoviesData);
       } finally {
         setLoading(false);
       }
@@ -46,6 +51,7 @@ export function MoviesByGenre() {
       onSelectGenre={setActiveGenre}
       selectedMovie={selectedMovie}
       onSelectMovie={setSelectedMovie}
+      ownedMovies={ownedMovies}
     />
   );
 }

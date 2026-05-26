@@ -1,4 +1,3 @@
-// Import Swiper styles
 import "swiper/swiper-bundle.css";
 import "swiper/swiper.css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -38,8 +37,6 @@ export function HeroBanner({
     if (!selectedMovie) return;
     navigate(`/movie/${selectedMovie.id}`);
   };
-
-  console.log("Owned Movies:", ownedMovies);
 
   return (
     <Swiper

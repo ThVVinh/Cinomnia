@@ -9,8 +9,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    console.log("Checking auth with token:", `Bearer ${token}`);
-
     if (!token) {
       setLoading(false);
       return;
@@ -36,9 +34,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const res = await api.post("/auth/login", { email, password });
-
-      console.log("LOGIN RESPONSE:", res.data);
-
       const token = res.data.token;
 
       localStorage.setItem("token", token);
@@ -49,13 +44,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       });
 
-      console.log("ME RESPONSE:", meRes.data);
-
       setUser(meRes.data);
 
       return true;
     } catch (err) {
-      console.error("LOGIN ERROR:", err);
       logout();
       return false;
     }

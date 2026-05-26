@@ -6,7 +6,6 @@ export function Cart() {
 
   const fakePaymentProcess = async (movieIds: number[]) => {
     try {
-        console.log("Processing payment for movies:", movieIds);
         await purchaseMovies(movieIds);
         return true;
     } catch (error) {

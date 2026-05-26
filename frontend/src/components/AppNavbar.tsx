@@ -45,13 +45,12 @@ export function AppNavbar() {
   return (
     <>
       <Navbar bg="dark" data-bs-theme="dark">
-        <Container fluid className="gap-5">
+        <Container className="gap-5">
           <Navbar.Brand>
             <Image
               src="/logo.png"
               width="60"
               height="60"
-              className="d-inline-block align-top"
               alt="Cinomnia logo"
             />
           </Navbar.Brand>
