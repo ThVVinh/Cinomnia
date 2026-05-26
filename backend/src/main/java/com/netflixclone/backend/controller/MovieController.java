@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.netflixclone.backend.dto.CreditDTO;
 import com.netflixclone.backend.entity.CustomUserPrincipal;
-import com.netflixclone.backend.entity.Media;
 import com.netflixclone.backend.entity.Movie;
 import com.netflixclone.backend.entity.Review;
 import com.netflixclone.backend.repository.OwnedMovieRepo;
@@ -85,5 +84,10 @@ public class MovieController {
     @GetMapping("/{movieId}/reviews")
     public List<Review> getMovieReviews(@PathVariable Integer movieId) {
         return reviewService.getReviewsByMovieId(movieId);
+    }
+
+    @GetMapping("/search")
+    public List<Movie> searchMoviesByTitle(@RequestParam String title) {
+        return movieService.searchMoviesByTitle(title);
     }
 }

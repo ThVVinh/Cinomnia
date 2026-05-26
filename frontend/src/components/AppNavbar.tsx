@@ -3,21 +3,44 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, Cart } from "react-bootstrap-icons";
-import { NavDropdown } from "react-bootstrap";
+import { ListGroup, NavDropdown } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import { NavLink } from "react-router-dom";
 import "./styles.css";
 import { useCartAnimation } from "../contexts/CartAnimation/CartAnimationContext";
 import { useCart } from "../contexts/useCart";
 import { useAuth } from "../auth/useAuth";
+import { movieService } from "../services/movieService";
+import type { Movie } from "../configs/Models";
 export function AppNavbar() {
   const [showSearch, setShowSearch] = useState(false);
-  const {user, logout} = useAuth();
-  const isAuthenticated = !!user; 
+  const [keyword, setKeyword] = useState("");
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const { user, logout } = useAuth();
+  const isAuthenticated = !!user;
   const { cartRef } = useCartAnimation();
-  const {cartItems} = useCart();
+  const { cartItems } = useCart();
+
+  useEffect(() => {
+    if (!keyword.trim()) {
+      setMovies([]);
+      return;
+    }
+
+    const timeout = setTimeout(async () => {
+      try {
+        const data = await movieService.searchMoviesByTitle(keyword);
+
+        setMovies(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [keyword]);
 
   return (
     <>
@@ -52,24 +75,63 @@ export function AppNavbar() {
             </NavLink>
           </Nav>
           <div className="d-flex gap-3">
-            <Form className="d-flex">
-              {showSearch && (
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                />
+            <div className="position-relative">
+              <Form className="d-flex">
+                {showSearch && (
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
+                  />
+                )}
+
+                <Button
+                  variant="outline-light"
+                  onClick={() => setShowSearch(!showSearch)}
+                >
+                  <Search />
+                </Button>
+              </Form>
+
+              {movies.length > 0 && showSearch && (
+                <ListGroup
+                  className="position-absolute mt-1"
+                  style={{
+                    top: "100%",
+                    left: 0,
+                    width: "300px",
+                    zIndex: 1000,
+                    maxHeight: "300px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {movies.map((movie) => (
+                    <ListGroup.Item
+                      key={movie.id}
+                      action
+                      as={NavLink}
+                      to={`/movie/${movie.id}`}
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <Image
+                          src={movie.posterUrl}
+                          width={50}
+                          height={75}
+                          className="me-2"
+                          alt={movie.title}
+                        />
+                        {movie.title}
+                      </div>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
               )}
-              <Button
-                variant="outline-light"
-                onClick={() => setShowSearch(!showSearch)}
-              >
-                <Search />
-              </Button>
-            </Form>
+            </div>
             <Button variant="outline-light" href="/cart" ref={cartRef}>
-              <Cart /> {cartItems.length > 0 && (
+              <Cart />{" "}
+              {cartItems.length > 0 && (
                 <span className="cart-count">{cartItems.length}</span>
               )}
             </Button>
@@ -93,7 +155,9 @@ export function AppNavbar() {
 
                   <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
 
-                  <NavDropdown.Item href="/billing">Billing History</NavDropdown.Item>
+                  <NavDropdown.Item href="/billing">
+                    Billing History
+                  </NavDropdown.Item>
 
                   <NavDropdown.Divider />
 

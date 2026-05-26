@@ -12,4 +12,5 @@ public interface MovieRepo extends JpaRepository<Movie, Integer> {
     List<Movie> findTop10ByOrderByRatingDesc();
     List<Movie> findByGenresId(Integer genreId);
     List<Movie> findTop10ByOrderByReleaseDateDesc();
+    List<Movie> findByTitleContainingIgnoreCase(String title);
 }

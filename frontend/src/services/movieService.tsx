@@ -20,5 +20,10 @@ export const movieService = {
     getMovieVideoUrl: async (id: number): Promise<Media> => {
         const response = await api.get(`/movies/${id}/media`);
         return response.data;
+    },
+
+    searchMoviesByTitle: async (title: string): Promise<Movie[]> => {
+        const response = await api.get(`/movies/search?title=${encodeURIComponent(title)}`);
+        return response.data;
     }
 }

@@ -38,4 +38,8 @@ public class MovieService {
     public List<Movie> getMoviesByIds(List<Integer> ids) {
         return movieRepo.findAllById(ids);
     }
+
+    public List<Movie> searchMoviesByTitle(String title) {
+        return movieRepo.findByTitleContainingIgnoreCase(title);
+    }
 }
